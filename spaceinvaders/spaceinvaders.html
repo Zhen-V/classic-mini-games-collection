@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="crt-effect"></div>
+    <div class="scanlines"></div>
+
+    <div class="desc">
+        <a href="../main.html">&lt;--</a>
+        <h1>SPACE INVADERS</h1>
+    </div>
+
+    <main>
+        <div class="game-container">
+            <div class="game-header">
+                <h2>SCORE: <span id="score">0</span></h2>
+            </div>
+            <canvas id="board"></canvas>
+        </div>
+    </main>
+
+    <div class="controls">
+        <div class="control-row">
+            <button id="left-btn">←</button>
+        </div>
+        <div class="control-row">
+            <button id="rotate-btn">↑</button>
+        </div>
+        <div class="control-row">
+            <button id="right-btn">→</button>
+        </div>
+    </div>
+    
+    <div class="btn">
+        <button id="start-button">начать</button>
+    </div>
+
+    <footer>© 2025 ВСЕ ПРАВА ЗАЩИЩЕННЫ</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

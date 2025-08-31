@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Змейка</title>
+    <link rel="stylesheet" href="styleSnake.css">
+    <script src="snakeScript.js" defer type="module"></script>
+    <link rel="stylesheet" href="styleSnake.css">
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    
+    <header class="desc">
+        <h1 class="retro-title"><a href="../main.html"><--</a> ЗМЕЙКА</h1>
+    </header>
+
+    <main>
+        <div class="game-container">
+            <div class="game-header">
+                <h3 class="retro-text">SCORE: <span id="score">0</span></h3>                <div class="controls-info">
+                    <div class="control-keys">
+                        <div class="key" id="left-key">←</div>
+                        <div class="key" id="right-key">→</div>
+                        <div class="key" id="rotate-key">↑</div>
+                        <div class="key" id="down-key">↓</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <div class="grid" id="gameBoard">
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="btn-container">
+        <button id="resetBtn" class="game-btn pixel-btn" onclick="gameStart()">ИГРАТЬ</button>
+    </div>
+    <footer>
+        © 2025 ВСЕ ПРАВА ЗАЩИЩЕННЫ
+    </footer>
+</body>
+</html>

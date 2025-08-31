@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сапер</title>
+    <link rel="stylesheet" href="mineStyle.css">
+    <script src="mineScript.js" type="module"></script>
+</head>
+<body>
+    <header class="desc">
+        <h1 class="retro-title"><a href="../main.html"><--</a>★ САПЕР ★</h1>
+    </header>
+
+    <main>
+        <div class="game-container">
+            <div class="game-header">
+                <h3 class="retro-text">
+                    ОСТАЛОСЬ БОМБ: 
+                    <span data-mine-count></span>
+                </h3>
+                <input class="restart-btn"
+                type="reset"
+                value="😁"
+                onclick="restartGame()">
+            
+            <div class="game-area">
+                <div class="board">
+                    
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="tutorial">
+        <button class="tutor" onclick="showTutor()">
+            Нажмите чтобы <br> посмотреть туториал
+        </button>
+
+        <div id="tutorial-content" class="tutorial-content">
+            <h3>★ Как играть в Сапер ★</h3>
+            <p>1. Цель игры - открыть все клетки, не содержащие бомбы</p>
+            <p>2. Левый клик - открыть клетку</p>
+            <p>3. Правый клик - поставить/убрать флажок</p>
+            <p>4. Число в клетке показывает сколько бомб вокруг нее</p>
+            <p>5. Если открыть клетку с бомбой - игра проиграна</p>
+            <p>6. Чтобы выиграть, нужно отметить все бомбы флажками</p>
+        </div>
+    </div>
+    
+    <footer class="retro-footer">
+        <p>© 2025 ВСЕ ПРАВА ЗАЩИЩЕНЫ</p>
+    </footer>
+
+    <script>
+        function showTutor() {
+            const tutorial = document.getElementById('tutorial-content');
+            if (tutorial.style.display === 'none' || tutorial.style.display === '') {
+                tutorial.style.display = 'block';
+                document.querySelector('.tutor').textContent = 'Скрыть туториал';
+            } else {
+                tutorial.style.display = 'none';
+                document.querySelector('.tutor').textContent = 'Нажмите чтобы\n посмотерть туториал';
+            }
+        }
+    </script>
+</body>
+</html>

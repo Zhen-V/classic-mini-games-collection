@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теннис</title>
+    <link rel="stylesheet" href="tennisStyle.css">
+</head>
+<body>
+    <div class="crt-effect"></div>
+    <div class="scanlines"></div>
+    
+
+    <header class="desc">
+        <a href="../main.html"><--</a>
+        <h1 class="retro-title">ТЕННИС</h1>
+    </header>
+
+    <main>
+
+        <div class="game-container">
+            <div class="game-header">
+                <h3 class="retro-score">ИГРОК 1: <span id="score1">00</span> ◇ ИГРОК 2: <span id="score2">00</span></h3>
+                <div class="controls-info">
+                    <div class="control-keys">
+                        <div class="key">W</div>
+                        <div class="key">S</div>
+                        <div class="key-separator">│</div>
+                        <div class="key">↑</div>
+                        <div class="key">↓</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <div class="court" id="gameCourt">
+                    <div class="paddle left-paddle"></div>
+                    <div class="ball"></div>
+                    <div class="paddle right-paddle"></div>
+                    <div class="center-line"></div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <div class="btn-container">
+        <button id="start-button" class="game-btn pixel-btn">СТАРТ</button>
+    </div>
+
+    <footer class="retro-footer">
+        <p>© 2025 ВСЕ ПРАВА ЗАЩИЩЕННЫ</p>
+    </footer>
+
+    <script src="tennis.Script.js"></script>
+</body>
+</html>

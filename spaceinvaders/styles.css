@@ -1,0 +1,189 @@
+
+
+:root {
+    --primary-bg: #000;
+    --accent-color: #0f0;
+    --text-color: #fff;
+    --pixel-border: 4px solid var(--accent-color);
+    --glow-effect: 0 0 10px #51ff00;
+}
+
+body {
+    background: var(--primary-bg);
+    color: var(--text-color);
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.crt-effect, .scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.crt-effect {
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 2px,
+        rgba(0, 240, 255, 0.05) 3px,
+        rgba(0, 240, 255, 0.05) 4px
+    );
+}
+
+.scanlines {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 4, 255, 0.158) 51%
+    );
+    background-size: 100% 4px;
+    z-index: 11;
+}
+
+.desc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 5px 0;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.desc a {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    text-shadow: var(--glow-effect);
+    text-decoration: none;
+}
+
+.desc h1 {
+    color: var(--text-color);
+    text-shadow: var(--glow-effect);
+    font-size: 2rem;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.game-container {
+    background: #111;
+    border: var(--pixel-border);
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    margin: 5px auto;
+    box-shadow: var(--glow-effect);
+    flex-shrink: 0; 
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px;
+    background: #000;
+    border: 2px solid var(--accent-color);
+}
+
+#board {
+    display: block;
+    border: 2px solid var(--accent-color);
+    background: var(--primary-bg);
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 60vh; 
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.control-row {
+    display: flex;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.control-row button{
+    padding: 10px 10px;
+}
+
+button {
+    background: #000;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    margin: 0 5px;
+}
+
+#start-button {
+    padding: 8px 20px;
+    font-size: 1rem;
+    margin: 5px auto;
+    display: block;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+button:hover, button.active {
+    background: var(--accent-color);
+    color: #000;
+    box-shadow: var(--glow-effect);
+}
+
+footer {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    margin-top: auto; /* Push to bottom */
+    padding: 10px;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+@media (max-width: 600px) {
+    .desc {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .desc a { font-size: 2rem; }
+    .desc h1 { font-size: 1.5rem; }
+    .game-container {
+        padding: 10px;
+    }
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    #board {
+        max-height: 50vh; /* Smaller canvas on mobile */
+    }
+}
