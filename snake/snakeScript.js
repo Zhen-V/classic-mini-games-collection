@@ -41,7 +41,7 @@ function main(currentTime) {
     updateScore();
 }
 
-function startGame() {
+function gameStart() {
     gameOver = false;
     gameStartTime = performance.now();
     
@@ -131,4 +131,5 @@ document.addEventListener('keyup', handleKeyUp);
 resetBtn.addEventListener('click', startGame);
 
 // Export for HTML
+
 window.gameStart = startGame;
