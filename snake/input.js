@@ -7,6 +7,10 @@ export function resetInput() {
 }
 
 window.addEventListener('keydown', e => {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+    }
+    
     switch (e.key) {
         case "ArrowUp":
             if (lastInputDirection.y !== 0) break;
@@ -28,6 +32,6 @@ window.addEventListener('keydown', e => {
 });
 
 export function getInputDirection() {
-    lastInputDirection = inputDirection;
+    lastInputDirection = { ...inputDirection };
     return inputDirection;
 }
