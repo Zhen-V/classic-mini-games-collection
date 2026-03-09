@@ -1,12 +1,11 @@
 import { update as updateSnake, draw as drawSnake, snakeSpeed, getSnakeHead, snakeIntersection, resetSnake, getScore } from "./snake.js";
 import { outsideGrid } from "./grid.js";
 import { update as updateFood, draw as drawFood, resetFood } from './food.js';
-
+import { resetInput } from './input.js';
 
 const gameBoard = document.getElementById('gameBoard');
 const scoreDisplay = document.getElementById('score');
 const resetBtn = document.getElementById('resetBtn');
-
 
 let lastRenderTime = 0;
 let gameOver = false;
@@ -14,18 +13,19 @@ let isPaused = false;
 let animationFrameId = null;
 let gameStartTime = 0;
 
-
 function initGameBoard() {
     gameBoard.innerHTML = '';
-    gameBoard.style.setProperty('--grid-size', 21); // Match grid.js size
+    gameBoard.style.setProperty('--grid-size', 21);
 }
 
-
 function main(currentTime) {
-    if (gameOver || isPaused) {
-        if (gameOver) {
-            handleGameOver();
-        }
+    if (gameOver) {
+        handleGameOver();
+        return;
+    }
+    
+    if (isPaused) {
+        animationFrameId = window.requestAnimationFrame(main);
         return;
     }
     
@@ -41,8 +41,9 @@ function main(currentTime) {
     updateScore();
 }
 
-function gameStart() {
+function startGame() {
     gameOver = false;
+    isPaused = false;  // Reset pause state
     gameStartTime = performance.now();
     
     if (animationFrameId) {
@@ -51,10 +52,11 @@ function gameStart() {
     
     resetSnake();
     resetFood();
+    resetInput(); 
     initGameBoard();
     
-
-    window.requestAnimationFrame(main);
+    lastRenderTime = performance.now(); 
+    animationFrameId = window.requestAnimationFrame(main);
     
     resetBtn.textContent = 'ПАУЗА';
     resetBtn.onclick = togglePause;
@@ -72,12 +74,19 @@ function togglePause() {
 
 function handleGameOver() {
     const finalScore = getScore();
-    if (confirm(`ИГРА ОКОНЧЕНА! Счёт: ${finalScore}\nИграем ещё?`)) {
-        startGame();
-    } else {
-        resetBtn.textContent = 'ИГРАТЬ';
-        resetBtn.onclick = startGame;
+    if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
     }
+
+    setTimeout(() => {
+        if (confirm(`ИГРА ОКОНЧЕНА! Счёт: ${finalScore}\nИграем ещё?`)) {
+            startGame();
+        } else {
+            resetBtn.textContent = 'ИГРАТЬ';
+            resetBtn.onclick = startGame;
+        }
+    }, 100);
 }
 
 function update() {
@@ -98,23 +107,26 @@ function updateScore() {
 
 function checkDeath() {
     gameOver = outsideGrid(getSnakeHead()) || snakeIntersection();
+    return gameOver;
 }
 
 const keyDivs = {
-    ArrowLeft: document.getElementById('left-key'),
-    ArrowRight: document.getElementById('right-key'),
-    ArrowUp: document.getElementById('rotate-key'),
-    ArrowDown: document.getElementById('down-key'),
+    'ArrowLeft': document.getElementById('left-key'),
+    'ArrowRight': document.getElementById('right-key'),
+    'ArrowUp': document.getElementById('rotate-key'),
+    'ArrowDown': document.getElementById('down-key'),
 };
 
 function handleKeyDown(event) {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(event.key)) {
+        event.preventDefault();
+    }
+    
     if (keyDivs[event.key]) {
         keyDivs[event.key].classList.add('active');
     }
     
-
-    if (event.code === 'Space') {
-        event.preventDefault();
+    if (event.code === 'Space' || event.key === ' ') {
         togglePause();
     }
 }
@@ -125,11 +137,8 @@ function handleKeyUp(event) {
     }
 }
 
-// Initialize game
 document.addEventListener('keydown', handleKeyDown);
 document.addEventListener('keyup', handleKeyUp);
 resetBtn.addEventListener('click', startGame);
 
-// Export for HTML
-
-window.gameStart = startGame;
+window.startGame = startGame;
