@@ -15,6 +15,7 @@ export function update() {
     addSegments();
     const inputDirection = getInputDirection();
     
+    if (inputDirection.x === 0 && inputDirection.y === 0) return;
 
     for (let i = snakeBody.length - 2; i >= 0; i--) {
         snakeBody[i + 1] = { ...snakeBody[i] };
@@ -31,7 +32,6 @@ export function draw(gameBoard) {
         snakeElement.style.gridColumnStart = segment.x;
         snakeElement.classList.add('snake');
         
-
         if (index === 0) {
             snakeElement.classList.add('snake-head');
         }
@@ -42,7 +42,7 @@ export function draw(gameBoard) {
 
 export function expandSnake(amount) {
     newSegments += amount;
-    score += amount * 10;
+    score += amount * 10;  
 }
 
 export function onSnake(position, { ignoreHead = false } = {}) {
