@@ -1,31 +1,26 @@
 
-// logic
-
-
 export const tileStatuses = {
-    hidden: 'hidden',
-    mine: 'mine',
-    number: 'number',
-    marked: 'marked',
+    HIDDEN: 'hidden',
+    MINE: 'mine',
+    NUMBER: 'number',
+    MARKED: 'marked',
 }
-
 
 export function createBoard(boardSize, numberOfMines) {
     const board = []
     const minePosition = getMinePosition(boardSize, numberOfMines)
 
-    
-    for ( let x = 0; x < boardSize; x++) {
+    for (let x = 0; x < boardSize; x++) {
         const row = []
-        for ( let y = 0; y < boardSize; y++) {
+        for (let y = 0; y < boardSize; y++) {
             const element = document.createElement("div")
-            element.dataset.status = tileStatuses.hidden
+            element.dataset.status = tileStatuses.HIDDEN
 
             const tile = {
                 element,
                 x,
                 y,
-                mine: minePosition.some(positionMatch.bind(null, { x, y })),
+                mine: minePosition.some(pos => positionMatch(pos, { x, y })),
                 get status() {
                     return this.element.dataset.status
                 },
@@ -42,34 +37,38 @@ export function createBoard(boardSize, numberOfMines) {
 }
 
 export function markTile(tile) {
-    if (tile.status !== tileStatuses.hidden && 
-        tile.status !== tileStatuses.marked
-    ) {
+    if (tile.status !== tileStatuses.HIDDEN && 
+        tile.status !== tileStatuses.MARKED) {
         return
     }
 
-    if (tile.status === tileStatuses.marked) {
-        tile.status = tileStatuses.hidden
+    if (tile.status === tileStatuses.MARKED) {
+        tile.status = tileStatuses.HIDDEN
     } else {
-        tile.status = tileStatuses.marked
+        tile.status = tileStatuses.MARKED
     }
 }
 
 export function revealTile(board, tile) {
-    if ( tile.status !== tileStatuses.hidden) {
+    if (tile.status !== tileStatuses.HIDDEN) {
         return
     }
 
-    if(tile.mine) {
-        tile.status = tileStatuses.mine
+    if (tile.mine) {
+        tile.status = tileStatuses.MINE
         return
     }
 
-    tile.status = tileStatuses.number
-    const adjasentTiles = nearbyTiles(board, tile)
-    const mines = adjasentTiles.filter(t => t.mine)
+    tile.status = tileStatuses.NUMBER
+    const adjacentTiles = nearbyTiles(board, tile)  // Fixed spelling
+    const mines = adjacentTiles.filter(t => t.mine)
+    
     if (mines.length === 0) {
-        adjasentTiles.forEach(revealTile.bind(null, board))
+        adjacentTiles.forEach(t => {
+            if (t.status === tileStatuses.HIDDEN) {
+                revealTile(board, t)
+            }
+        })
     } else {
         tile.element.textContent = mines.length
     }
@@ -78,9 +77,9 @@ export function revealTile(board, tile) {
 export function checkWin(board) {
     return board.every(row => {
         return row.every(tile => {
-            return tile.status === tileStatuses.number || 
-                (tile.mine && (tile.status === tileStatuses.hidden ||
-                tile.status === tileStatuses.marked))
+            return tile.status === tileStatuses.NUMBER || 
+                (tile.mine && (tile.status === tileStatuses.HIDDEN ||
+                tile.status === tileStatuses.MARKED))
         })
     })
 }
@@ -88,11 +87,10 @@ export function checkWin(board) {
 export function checkLose(board) {
     return board.some(row => {
         return row.some(tile => {
-            return tile.status === tileStatuses.mine
+            return tile.status === tileStatuses.MINE
         })
     })
 }
-
 
 function getMinePosition(boardSize, numberOfMines) {
     const positions = []
@@ -111,10 +109,8 @@ function getMinePosition(boardSize, numberOfMines) {
     return positions
 }
 
-
-
 function positionMatch(a, b) {
-    return a.x === b.x && a.y === b.y  // Changed comma to logical AND (&&)
+    return a.x === b.x && a.y === b.y
 }
 
 function randomNum(size) {
@@ -122,14 +118,19 @@ function randomNum(size) {
 }
 
 function nearbyTiles(board, { x, y }) {
-    const tiles = []  // Changed variable name to plural
+    const tiles = []
 
     for (let xOffset = -1; xOffset <= 1; xOffset++) {
         for (let yOffset = -1; yOffset <= 1; yOffset++) {
+            if (xOffset === 0 && yOffset === 0) continue 
             const tile = board[x + xOffset]?.[y + yOffset]
-            if (tile) tiles.push(tile)  // Push to tiles array
+            if (tile) tiles.push(tile)
         }
     }
 
     return tiles
+}
+
+    return tiles
+
 }
